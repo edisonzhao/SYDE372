@@ -40,7 +40,7 @@ title('Parametric Gaussian Estimation (Dataset b)')
 %%%%%%% Parametric Estimation - Exponential %%%%%%%%%% 
 
 % Data Set a
-lambda_est_a = (1/length(data.a))*sum(data.a);
+lambda_est_a = length(data.a)/sum(data.a);
 
 y_est_a_exp = exppdf(x_vals, 1/lambda_est_a);
 
@@ -52,7 +52,7 @@ legend('True', 'Estimated');
 title('Parametric Exponential Estimation (Dataset a)')
 
 % Data Set b
-lambda_est_b = (1/length(data.b))*sum(data.b);
+lambda_est_b = length(data.b)/sum(data.b);
 
 y_est_b_exp = exppdf(x_vals, 1/lambda_est_b);
 

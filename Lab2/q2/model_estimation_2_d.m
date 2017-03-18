@@ -68,5 +68,32 @@ title('Parametric Estimation & ML Classification');
 legend('Cluster A','Cluster B','Cluster C');
 hold off;
 
+% Non-Parametric Approach
+res = [1 0 0 500 500];
 
+window = fspecial('gaussian', [50 50], 400);
 
+[p_al, x_al, y_al] = parzen(data.al, res, window);
+[p_bl, x_bl, y_bl] = parzen(data.bl, res, window);
+[p_cl, x_cl, y_cl] = parzen(data.cl, res, window);
+
+decision_mat = zeros(502, 502);
+
+for i=1:502
+    for j=1:502
+        if max([p_al(i,j), p_bl(i,j), p_cl(i,j)]) == p_al(i,j)
+            decision_mat(i,j) = 1;
+        elseif max([p_al(i,j), p_bl(i,j), p_cl(i,j)]) == p_bl(i,j)
+            decision_mat(i,j) = 2;
+        elseif max([p_al(i,j), p_bl(i,j), p_cl(i,j)]) == p_cl(i,j)
+            decision_mat(i,j) = 3;
+        end
+    end
+end
+
+figure()
+plot(data.at(:,1),data.at(:,2),'ro', data.bt(:,1),data.bt(:,2),'go', data.ct(:,1),data.ct(:,2),'yo')
+legend('at', 'bt', 'ct')
+hold on
+contour(decision_mat, 'Color', 'blue')
+title('Non-parametric estimation of 2D data')

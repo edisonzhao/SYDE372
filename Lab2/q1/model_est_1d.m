@@ -93,8 +93,31 @@ ylabel('p(x)');
 legend('True', 'Estimated');
 title('Parametric Uniform Estimation (Dataset b)')
 
+% Non-Parametric Approach
+result_a_1 = Parzan1_D(data.a, 0.1);
+result_a_2 = Parzan1_D(data.a, 0.4);
 
+figure()
+subplot(2,1,1)
+plot (result_a_1(:, 1), result_a_1(:, 2), result_a_1(:, 1), normpdf(result_a_1(:, 1), 5, 1));
+legend('Estimated density', 'True density');
+title('Parzen Window estimation on data a with h = 0.1')
 
+subplot(2,1,2)
+plot (result_a_2(:, 1), result_a_2(:, 2), result_a_2(:, 1), normpdf(result_a_2(:, 1), 5, 1));
+legend('Estimated density', 'True density');
+title('Parzen Window estimation on data a with h = 0.4')
 
+result_b_1 = Parzan1_D(data.b, 0.1);
+result_b_2 = Parzan1_D(data.b, 0.4);
 
+figure()
+subplot(2,1,1)
+plot (result_b_1(:, 1), result_b_1(:, 2), result_b_1(:, 1), exppdf(result_b_1(:, 1),1));
+legend('Estimated density', 'True density');
+title('Parzen Window estimation on data b with h = 0.1')
 
+subplot(2,1,2)
+plot (result_b_2(:, 1), result_b_2(:, 2), result_b_2(:, 1), exppdf(result_b_2(:, 1),1));
+legend('Estimated density', 'True density');
+title('Parzen Window estimation on data b with h = 0.4')

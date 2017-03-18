@@ -3,7 +3,7 @@ close all;
 
 load('lab2_3.mat');
 
-% Part 1
+Part 1
 for i = 1:3
     figure(i);
     hold on;
@@ -40,7 +40,55 @@ for i = 1:3
     hold off;
 end
 
+% Part 3
+avg_err = zeros(10,1);
+max_err = zeros(10,1);
+min_err = zeros(10,1);
+stddev_err = zeros(10,1);
 
+for j = 1:10
+    error = zeros(20,1);
+    for m = 1:20
+        [prototypes, misclass] = SequentialClassifier(a, b, j);
 
+        ab = vertcat(a,b);
+        actual = zeros(size(ab,1),1);
+        actual(1:length(a(:,1))) = 1;
+        actual(length(a(:,1))+1:length(ab)) = 2;
+        predicted = zeros(size(actual));
 
+        for k=1:400
+            for l=1:length(prototypes(:,1))
+                g = MED(prototypes(l,1:2)', prototypes(l,3:4)', ab(k,:)');
+                if g == 1 && misclass(l,2) == 0
+                    predicted(k) = 1;
+                    break;
+                elseif g == 2 && misclass(l,1) == 0
+                    predicted(k) = 2;
+                    break;
+                end
+            end
+        end
+
+        correct = length(find(actual == predicted));
+        error(m) = (400-correct)/400;
+    end
+    avg_err(j) = mean(error);
+    max_err(j) = max(error);
+    min_err(j) = min(error);
+    stddev_err(j) = std(error);
+end
+
+figure();
+hold on;
+plot(avg_err, 'r');
+plot(max_err, 'b');
+plot(min_err, 'y');
+plot(stddev_err, 'g');
+xlabel('J Sequences');
+ylabel('Error');
+title('Error Rate vs. J Sequences');
+legend('Avg Error Rate', 'Max Error Rate', ...
+    'Min Error Rate', 'Std Dev Error Rate');
+hold off;
 

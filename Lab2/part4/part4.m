@@ -3,7 +3,7 @@ close all;
 
 load('lab2_3.mat');
 
-Part 1
+% Part 1
 for i = 1:3
     figure(i);
     hold on;

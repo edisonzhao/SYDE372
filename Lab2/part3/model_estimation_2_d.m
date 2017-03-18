@@ -1,3 +1,6 @@
+clear all;
+close all;
+
 % 1 Parametric estimation
 data = load('lab2_2.mat');
 

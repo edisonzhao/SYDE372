@@ -9,22 +9,23 @@ j = 1;
 j_thres = 20;
 
 while size(a,1) > 0 && size(b,1) > 0
-    %while j < j_thres
+    while j <= j_thres
         n_aB = -1;
         n_bA = -1;
+        
+        AB = vertcat(a,b);
+        known_AB = zeros(length(AB),1);
+        predicted = zeros(size(known_AB));
+        
         while n_aB ~= 0 && n_bA ~= 0
             rand_a_index = randi(size(a,1));
             rand_b_index = randi(size(b,1));
 
             proto_a = a(rand_a_index);
             proto_b = b(rand_b_index);
-
-            AB = vertcat(a,b);
-            known_AB = zeros(length(AB),1);
+            
             known_AB(1:length(a)) = 1;
             known_AB(length(a)+1:length(known_AB)) = 2;
-
-            predicted = zeros(size(known_AB));
 
             for i=1:length(AB)
                 predicted(i) = MED(proto_a', proto_b', AB(i,:)');
@@ -63,7 +64,7 @@ while size(a,1) > 0 && size(b,1) > 0
             end
             a(ind, :) = [];
         end
-    %end
+    end
 end
 
 % at this point we would have seq of discriminants

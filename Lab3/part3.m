@@ -48,3 +48,24 @@ cm_f8 = confusionmat(known_f8t, MICD_f8t);
 cm_f32 = confusionmat(known_f32t, MICD_f32t);
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Part 4
+
+% Plot original
+figure();
+imagesc(multim);
+colormap(gray);
+
+cimage = zeros(256,256);
+
+for i = 1:256
+    for j = 1:256
+        cimage(i,j) = MICD([multf8(i,j,1);multf8(i,j,2)], means_f8, cov_f8);
+    end
+end
+
+figure();
+imagesc(cimage);
+
+
